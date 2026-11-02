@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #050507;
+  --bg-raised: #0a0a0f;
+  --bg-card: #0c0c10;
+  --bg-card-hover: #111117;
+  --yellow: #daa520;
+  --yellow-bright: #ffce33;
+  --yellow-dim: rgba(218, 165, 32, 0.12);
+  --yellow-border: rgba(218, 165, 32, 0.3);
+  --text: #e8e8ed;
+  --text-dim: #8a8aa0;
+  --text-muted: #555570;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.14);
+  --border-dashed: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography Helpers matching aimastodont.com */
+.font-unbounded {
+  font-family: 'Unbounded', sans-serif;
+}
+
+.font-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Background Grid pattern identical to aimastodont.com */
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, black 20%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Golden accents and glows */
+.gold-glow {
+  text-shadow: 0 0 24px rgba(218, 165, 32, 0.4);
+}
+
+.gold-box-glow {
+  box-shadow: 0 0 40px rgba(218, 165, 32, 0.15);
+}
+
+.gold-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  background: rgba(218, 165, 32, 0.08);
+  border: 1px solid var(--yellow-border);
+}
+
+/* Blinking dot */
+@keyframes liveBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.live-dot {
+  animation: liveBlink 2s ease-in-out infinite;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050507;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f1f28;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #daa520;
+}

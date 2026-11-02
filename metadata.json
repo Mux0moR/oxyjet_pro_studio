@@ -1,0 +1,6 @@
+{
+  "name": "OxyJet Studio — Продающий веб-сайт & Разработка проектов",
+  "description": "Профессиональная веб-разработка, современные цифровые сервисы и AI-решения с высокой конверсией.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
