@@ -33,13 +33,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
     <div
       role="group"
       aria-label={t.nav.langSwitchAria}
-      className="flex items-center p-0.5 rounded-lg bg-[#0c0c10] border border-white/15 font-mono text-[11px] font-bold tracking-wider shrink-0"
+      className="flex items-center p-0.5 rounded-lg bg-[#0c0c10] border border-white/15 font-mono text-[10px] sm:text-[11px] font-bold tracking-wider shrink-0"
       id={`${idPrefix}-lang-switcher`}
     >
       <button
         type="button"
         onClick={() => setLanguage('en')}
-        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+        className={`px-1.5 sm:px-2 py-1 rounded-md transition-all cursor-pointer ${
           language === 'en'
             ? 'bg-[#daa520] text-[#050507] shadow-[0_0_12px_rgba(218,165,32,0.3)]'
             : 'text-[#8a8aa0] hover:text-white'
@@ -53,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
       <button
         type="button"
         onClick={() => setLanguage('ru')}
-        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+        className={`px-1.5 sm:px-2 py-1 rounded-md transition-all cursor-pointer ${
           language === 'ru'
             ? 'bg-[#daa520] text-[#050507] shadow-[0_0_12px_rgba(218,165,32,0.3)]'
             : 'text-[#8a8aa0] hover:text-white'
@@ -62,6 +62,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
         aria-pressed={language === 'ru'}
       >
         RU
+      </button>
+      <span className="text-white/20 select-none px-0.5">|</span>
+      <button
+        type="button"
+        onClick={() => setLanguage('ka')}
+        className={`px-1.5 sm:px-2 py-1 rounded-md transition-all cursor-pointer ${
+          language === 'ka'
+            ? 'bg-[#daa520] text-[#050507] shadow-[0_0_12px_rgba(218,165,32,0.3)]'
+            : 'text-[#8a8aa0] hover:text-white'
+        }`}
+        id={`${idPrefix}-lang-ka`}
+        aria-pressed={language === 'ka'}
+      >
+        KA
       </button>
     </div>
   );
@@ -75,31 +89,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           : 'bg-[#050507]/50 backdrop-blur-md border-b border-white/5 py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-3">
         {/* Logo */}
         <a
           href="#"
-          className="flex items-center gap-2.5 text-white group focus:outline-none shrink-0"
+          className="flex items-center gap-2 sm:gap-2.5 text-white group focus:outline-none shrink-0"
           id="nav-logo"
         >
-          <div className="w-9 h-9 rounded-lg bg-[#0c0c10] border border-[#daa520]/40 flex items-center justify-center text-[#daa520] group-hover:border-[#daa520] group-hover:shadow-[0_0_15px_rgba(218,165,32,0.3)] transition-all">
-            <Terminal className="w-5 h-5" />
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0c0c10] border border-[#daa520]/40 flex items-center justify-center text-[#daa520] group-hover:border-[#daa520] group-hover:shadow-[0_0_15px_rgba(218,165,32,0.3)] transition-all">
+            <Terminal className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="flex flex-col">
-            <span className="font-unbounded font-black tracking-tight text-base sm:text-lg flex items-center gap-1.5 text-white">
+            <span className="font-unbounded font-black tracking-tight text-sm sm:text-base xl:text-lg flex items-center gap-1.5 text-white">
               OxyJet
-              <span className="text-[#daa520] text-xs font-mono font-bold tracking-widest px-1.5 py-0.5 rounded bg-[#daa520]/10 border border-[#daa520]/30 uppercase">
+              <span className="text-[#daa520] text-[10px] sm:text-xs font-mono font-bold tracking-widest px-1.5 py-0.5 rounded bg-[#daa520]/10 border border-[#daa520]/30 uppercase">
                 studio
               </span>
             </span>
-            <span className="font-mono text-[10px] text-[#8a8aa0] tracking-wider uppercase -mt-0.5">
+            <span className="font-mono text-[9px] sm:text-[10px] text-[#8a8aa0] tracking-wider uppercase -mt-0.5">
               {t.nav.brandSubtitle}
             </span>
           </div>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-3.5 xl:gap-4 2xl:gap-6">
+        <nav className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -113,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
 
         {/* Right CTA Actions & Language Switcher */}
         <div className="hidden sm:flex items-center gap-2 xl:gap-2.5 shrink-0">
-          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-[#0c0c10] border border-white/10 whitespace-nowrap">
+          <div className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-[#0c0c10] border border-white/10 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span>
             <span className="font-mono text-[10px] text-[#daa520] font-bold tracking-wider uppercase">
               {t.nav.slotsBadge}
@@ -126,16 +140,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             href="https://t.me/oxyjetprostudio_bot"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/20 hover:border-[#daa520] text-xs font-mono font-bold uppercase tracking-wider text-white hover:text-[#daa520] bg-white/[0.03] transition-all whitespace-nowrap"
+            className="flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-lg border border-white/20 hover:border-[#daa520] text-xs font-mono font-bold uppercase tracking-wider text-white hover:text-[#daa520] bg-white/[0.03] transition-all whitespace-nowrap"
             id="nav-telegram-btn"
+            title={t.nav.telegram}
           >
             <Send className="w-3.5 h-3.5 text-[#daa520]" />
-            <span>{t.nav.telegram}</span>
+            <span className="hidden xl:inline">{t.nav.telegram}</span>
           </a>
 
           <button
             onClick={() => onOpenContact(t.nav.presets.headerCta)}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#daa520] hover:bg-[#ffce33] text-[#050507] font-mono text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(218,165,32,0.25)] hover:shadow-[0_0_25px_rgba(218,165,32,0.45)] transition-all cursor-pointer whitespace-nowrap"
+            className="flex items-center gap-1.5 px-3 xl:px-3.5 py-2 rounded-lg bg-[#daa520] hover:bg-[#ffce33] text-[#050507] font-mono text-[11px] xl:text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(218,165,32,0.25)] hover:shadow-[0_0_25px_rgba(218,165,32,0.45)] transition-all cursor-pointer whitespace-nowrap"
             id="nav-cta-btn"
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -144,7 +159,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
         </div>
 
         {/* Mobile actions & menu button */}
-        <div className="flex sm:hidden items-center gap-2">
+        <div className="flex sm:hidden items-center gap-1.5">
           {renderLanguageSwitcher('mobile')}
           <button
             onClick={() => onOpenContact(t.nav.presets.mobileQuickCta)}

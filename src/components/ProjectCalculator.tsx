@@ -8,7 +8,7 @@ interface ProjectCalculatorProps {
 
 export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCalculation }) => {
   const { language, t } = useLanguage();
-  const locale = language === 'en' ? 'en-US' : 'ru-RU';
+  const locale = language === 'ru' ? 'ru-RU' : 'en-US';
 
   const projectTypes = t.calculator.projectTypes;
   const designTiers = t.calculator.designTiers;

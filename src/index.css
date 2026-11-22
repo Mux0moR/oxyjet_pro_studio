@@ -28,7 +28,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', 'Noto Sans Georgian', system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -38,15 +38,25 @@ body {
 
 /* Typography Helpers matching aimastodont.com */
 .font-unbounded {
-  font-family: 'Unbounded', sans-serif;
+  font-family: 'Unbounded', 'Noto Sans Georgian', system-ui, sans-serif;
 }
 
 .font-mono {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Space Mono', 'Noto Sans Georgian', ui-monospace, monospace;
 }
 
 .font-inter {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', 'Noto Sans Georgian', system-ui, -apple-system, sans-serif;
+}
+
+/* Georgian (Mkhedruli) script readability & clipping prevention */
+html[lang="ka"] .font-unbounded {
+  line-height: 1.24;
+  letter-spacing: -0.01em;
+}
+
+html[lang="ka"] .font-mono {
+  letter-spacing: 0.01em;
 }
 
 /* Background Grid pattern identical to aimastodont.com */

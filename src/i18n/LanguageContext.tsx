@@ -15,7 +15,7 @@ const LanguageContext = createContext<LanguageContextValue | undefined>(undefine
 const getInitialLanguage = (): Language => {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved === 'en' || saved === 'ru') {
+    if (saved === 'en' || saved === 'ru' || saved === 'ka') {
       return saved;
     }
   } catch {
@@ -37,7 +37,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'ru' : 'en');
+    const next: Record<Language, Language> = {
+      en: 'ru',
+      ru: 'ka',
+      ka: 'en',
+    };
+    setLanguage(next[language]);
   };
 
   const t = TRANSLATIONS[language];
