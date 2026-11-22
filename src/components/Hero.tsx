@@ -1,11 +1,14 @@
 import React from 'react';
 import { ArrowDown, Sparkles, TrendingUp, ShieldCheck, Zap, Code2 } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface HeroProps {
   onOpenContact: (presetMessage?: string) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
+export const Hero: React.FC<HeroProps> = () => {
+  const { t } = useLanguage();
+
   return (
     <section
       id="hero"
@@ -25,7 +28,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
         >
           <span className="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span>
           <span className="font-mono text-xs font-bold tracking-widest uppercase text-[#daa520]">
-            ВЕДЕМ ПРИЕМ ПРОЕКТОВ • РЕЛИЗЫ 2025/2026
+            {t.hero.statusBadge}
           </span>
         </div>
 
@@ -34,9 +37,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
           id="hero-headline"
           className="font-unbounded font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] tracking-tight text-[#e8e8ed] mb-6 max-w-4xl"
         >
-          РАЗРАБАТЫВАЕМ ЦИФРОВЫЕ СЕРВИСЫ,{' '}
+          {t.hero.headlinePrefix}
           <span className="text-[#daa520] gold-glow inline-block">
-            КОТОРЫЕ ПРОДАЮТ
+            {t.hero.headlineHighlight}
           </span>
         </h1>
 
@@ -45,9 +48,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
           id="hero-subtitle"
           className="font-mono text-xs sm:text-sm md:text-base text-[#8a8aa0] max-w-2xl leading-relaxed mb-10 text-center"
         >
-          Создаем <strong className="text-white font-bold">премиальные веб-сайты</strong>, высоконагруженные сервисы и внедряем{' '}
-          <span className="text-[#daa520] font-bold">AI-агентов</span>, увеличивающих конверсию в заявку до{' '}
-          <span className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded">4.2x</span>. Без шаблонных конструкторов. С гарантией срока по договору.
+          {t.hero.subtitleStart}
+          <strong className="text-white font-bold">{t.hero.subtitleStrong}</strong>
+          {t.hero.subtitleMiddle}
+          <span className="text-[#daa520] font-bold">{t.hero.subtitleAi}</span>
+          {t.hero.subtitleAfterAi}
+          <span className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded">
+            {t.hero.subtitleMultiplier}
+          </span>
+          {t.hero.subtitleEnd}
         </p>
 
         {/* Action Buttons */}
@@ -58,7 +67,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             id="hero-cta-calc"
           >
             <Sparkles className="w-4 h-4" />
-            <span>Рассчитать стоимость онлайн</span>
+            <span>{t.hero.ctaCalc}</span>
           </a>
 
           <a
@@ -67,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             id="hero-cta-cases"
           >
             <Code2 className="w-4 h-4 text-[#daa520]" />
-            <span>Смотреть кейсы (6)</span>
+            <span>{t.hero.ctaCases}</span>
           </a>
         </div>
 
@@ -75,15 +84,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-3xl mb-12">
           <div className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#0c0c10]/60 border border-white/5 font-mono text-[11px] text-[#8a8aa0]">
             <ShieldCheck className="w-4 h-4 text-[#daa520] shrink-0" />
-            <span>Дедлайн и смета в договоре</span>
+            <span>{t.hero.trust.contract}</span>
           </div>
           <div className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#0c0c10]/60 border border-white/5 font-mono text-[11px] text-[#8a8aa0]">
             <Zap className="w-4 h-4 text-[#daa520] shrink-0" />
-            <span>Запуск MVP от 7 дней</span>
+            <span>{t.hero.trust.mvp}</span>
           </div>
           <div className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#0c0c10]/60 border border-white/5 font-mono text-[11px] text-[#8a8aa0]">
             <TrendingUp className="w-4 h-4 text-[#daa520] shrink-0" />
-            <span>100% исходный код вам</span>
+            <span>{t.hero.trust.sourceCode}</span>
           </div>
         </div>
 
@@ -97,7 +106,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
               28<span className="text-[#daa520]">+</span>
             </span>
             <span className="font-mono text-[11px] uppercase tracking-wider text-[#8a8aa0] mt-1">
-              Проектов в проде
+              {t.hero.metrics.projectsLabel}
             </span>
           </div>
 
@@ -106,7 +115,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
               $4.8M+
             </span>
             <span className="font-mono text-[11px] uppercase tracking-wider text-[#8a8aa0] mt-1">
-              Доход клиентов
+              {t.hero.metrics.revenueLabel}
             </span>
           </div>
 
@@ -115,16 +124,16 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
               99.2%
             </span>
             <span className="font-mono text-[11px] uppercase tracking-wider text-[#8a8aa0] mt-1">
-              Индекс CSAT
+              {t.hero.metrics.csatLabel}
             </span>
           </div>
 
           <div className="flex flex-col items-center text-center p-2 border-l border-white/10">
             <span className="font-unbounded font-black text-2xl sm:text-3xl text-[#daa520]">
-              от 7 дн
+              {t.hero.metrics.speedValue}
             </span>
             <span className="font-mono text-[11px] uppercase tracking-wider text-[#8a8aa0] mt-1">
-              Скорость запуска
+              {t.hero.metrics.speedLabel}
             </span>
           </div>
         </div>
@@ -133,10 +142,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
         <a
           href="#projects"
           className="mt-8 flex flex-col items-center gap-1.5 text-[#555570] hover:text-[#daa520] transition-colors group"
-          aria-label="Перейти к проектам"
+          aria-label={t.hero.scrollAria}
         >
           <span className="font-mono text-[10px] tracking-widest uppercase">
-            Вниз к проектам
+            {t.hero.scrollLabel}
           </span>
           <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
         </a>

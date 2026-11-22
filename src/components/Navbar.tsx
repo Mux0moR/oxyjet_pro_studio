@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, Send, Terminal, Sparkles } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface NavbarProps {
   onOpenContact: (presetMessage?: string) => void;
@@ -8,6 +9,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,14 +20,51 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   }, []);
 
   const navLinks = [
-    { label: 'Кейсы', href: '#projects' },
-    { label: 'Услуги & Цены', href: '#services' },
-    { label: 'Калькулятор', href: '#calculator' },
-    { label: 'Процесс', href: '#process' },
-    { label: 'Стек', href: '#stack' },
-    { label: 'Отзывы', href: '#testimonials' },
-    { label: 'FAQ', href: '#faq' },
+    { label: t.nav.links.cases, href: '#projects' },
+    { label: t.nav.links.services, href: '#services' },
+    { label: t.nav.links.calculator, href: '#calculator' },
+    { label: t.nav.links.process, href: '#process' },
+    { label: t.nav.links.stack, href: '#stack' },
+    { label: t.nav.links.testimonials, href: '#testimonials' },
+    { label: t.nav.links.faq, href: '#faq' },
   ];
+
+  const renderLanguageSwitcher = (idPrefix: string) => (
+    <div
+      role="group"
+      aria-label={t.nav.langSwitchAria}
+      className="flex items-center p-0.5 rounded-lg bg-[#0c0c10] border border-white/15 font-mono text-[11px] font-bold tracking-wider shrink-0"
+      id={`${idPrefix}-lang-switcher`}
+    >
+      <button
+        type="button"
+        onClick={() => setLanguage('en')}
+        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+          language === 'en'
+            ? 'bg-[#daa520] text-[#050507] shadow-[0_0_12px_rgba(218,165,32,0.3)]'
+            : 'text-[#8a8aa0] hover:text-white'
+        }`}
+        id={`${idPrefix}-lang-en`}
+        aria-pressed={language === 'en'}
+      >
+        EN
+      </button>
+      <span className="text-white/20 select-none px-0.5">|</span>
+      <button
+        type="button"
+        onClick={() => setLanguage('ru')}
+        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+          language === 'ru'
+            ? 'bg-[#daa520] text-[#050507] shadow-[0_0_12px_rgba(218,165,32,0.3)]'
+            : 'text-[#8a8aa0] hover:text-white'
+        }`}
+        id={`${idPrefix}-lang-ru`}
+        aria-pressed={language === 'ru'}
+      >
+        RU
+      </button>
+    </div>
+  );
 
   return (
     <header
@@ -36,11 +75,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           : 'bg-[#050507]/50 backdrop-blur-md border-b border-white/5 py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
         {/* Logo */}
         <a
           href="#"
-          className="flex items-center gap-3 text-white group focus:outline-none"
+          className="flex items-center gap-2.5 text-white group focus:outline-none shrink-0"
           id="nav-logo"
         >
           <div className="w-9 h-9 rounded-lg bg-[#0c0c10] border border-[#daa520]/40 flex items-center justify-center text-[#daa520] group-hover:border-[#daa520] group-hover:shadow-[0_0_15px_rgba(218,165,32,0.3)] transition-all">
@@ -54,61 +93,65 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               </span>
             </span>
             <span className="font-mono text-[10px] text-[#8a8aa0] tracking-wider uppercase -mt-0.5">
-              High-End Digital & AI
+              {t.nav.brandSubtitle}
             </span>
           </div>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-3.5 xl:gap-4 2xl:gap-6">
           {navLinks.map((link) => (
             <a
-              key={link.label}
+              key={link.href}
               href={link.href}
-              className="font-mono text-xs font-semibold uppercase tracking-wider text-[#8a8aa0] hover:text-[#e8e8ed] hover:text-[#daa520] transition-colors"
+              className="font-mono text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-[#8a8aa0] hover:text-[#daa520] transition-colors whitespace-nowrap"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Right CTA Actions */}
-        <div className="hidden sm:flex items-center gap-3">
-          <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0c0c10] border border-white/10">
+        {/* Right CTA Actions & Language Switcher */}
+        <div className="hidden sm:flex items-center gap-2 xl:gap-2.5 shrink-0">
+          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-[#0c0c10] border border-white/10 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span>
-            <span className="font-mono text-[11px] text-[#daa520] font-bold tracking-wider uppercase">
-              2 слота на Q3
+            <span className="font-mono text-[10px] text-[#daa520] font-bold tracking-wider uppercase">
+              {t.nav.slotsBadge}
             </span>
           </div>
+
+          {renderLanguageSwitcher('desktop')}
 
           <a
             href="https://t.me/oxyjetprostudio_bot"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-white/20 hover:border-[#daa520] text-xs font-mono font-bold uppercase tracking-wider text-white hover:text-[#daa520] bg-white/[0.03] transition-all"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/20 hover:border-[#daa520] text-xs font-mono font-bold uppercase tracking-wider text-white hover:text-[#daa520] bg-white/[0.03] transition-all whitespace-nowrap"
             id="nav-telegram-btn"
           >
             <Send className="w-3.5 h-3.5 text-[#daa520]" />
-            <span>Telegram</span>
+            <span>{t.nav.telegram}</span>
           </a>
 
           <button
-            onClick={() => onOpenContact('Консультация по проекту')}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#daa520] hover:bg-[#ffce33] text-[#050507] font-mono text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(218,165,32,0.25)] hover:shadow-[0_0_25px_rgba(218,165,32,0.45)] transition-all cursor-pointer"
+            onClick={() => onOpenContact(t.nav.presets.headerCta)}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#daa520] hover:bg-[#ffce33] text-[#050507] font-mono text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(218,165,32,0.25)] hover:shadow-[0_0_25px_rgba(218,165,32,0.45)] transition-all cursor-pointer whitespace-nowrap"
             id="nav-cta-btn"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Обсудить проект</span>
+            <span>{t.nav.discussProject}</span>
           </button>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile actions & menu button */}
         <div className="flex sm:hidden items-center gap-2">
+          {renderLanguageSwitcher('mobile')}
           <button
-            onClick={() => onOpenContact('Консультация с мобильного меню')}
+            onClick={() => onOpenContact(t.nav.presets.mobileQuickCta)}
             className="p-2 rounded-lg bg-[#daa520] text-[#050507]"
             id="mobile-quick-cta"
-            title="Заказать"
+            title={t.nav.quickOrderTitle}
+            aria-label={t.nav.quickOrderTitle}
           >
             <Sparkles className="w-4 h-4" />
           </button>
@@ -116,7 +159,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-lg border border-white/10 text-white hover:border-[#daa520]"
             id="mobile-menu-toggle"
-            aria-label="Toggle menu"
+            aria-label={t.nav.toggleMenuAria}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -132,14 +175,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           <div className="flex items-center gap-2 mb-6 px-3 py-2 rounded-lg bg-[#0c0c10] border border-white/10">
             <span className="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span>
             <span className="font-mono text-xs text-[#daa520] font-bold tracking-wider uppercase">
-              Принимаем проекты // Свободно 2 слота
+              {t.nav.slotsMobileBanner}
             </span>
           </div>
 
           <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
-                key={link.label}
+                key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className="font-mono text-sm font-semibold uppercase tracking-wider text-[#e8e8ed] hover:text-[#daa520] py-1 border-b border-white/5 flex items-center justify-between"
@@ -154,12 +197,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenContact('Заявка из мобильного меню');
+                onOpenContact(t.nav.presets.mobileDrawerCta);
               }}
               className="w-full py-3 rounded-lg bg-[#daa520] hover:bg-[#ffce33] text-[#050507] font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(218,165,32,0.3)]"
             >
               <Sparkles className="w-4 h-4" />
-              <span>Обсудить проект</span>
+              <span>{t.nav.discussProject}</span>
             </button>
             <a
               href="https://t.me/oxyjetprostudio_bot"
@@ -168,7 +211,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               className="w-full py-2.5 rounded-lg border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:border-[#daa520]"
             >
               <Send className="w-4 h-4 text-[#daa520]" />
-              <span>Написать в Telegram</span>
+              <span>{t.nav.telegramDrawer}</span>
             </a>
           </div>
         </div>

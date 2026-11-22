@@ -1,30 +1,34 @@
 import React from 'react';
-import { SERVICE_PACKAGES } from '../data/projects';
+import { SERVICE_PACKAGES_BY_LANG } from '../data/projects';
 import { Check, Sparkles, Clock, ArrowRight, Shield } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ServicesSectionProps {
   onSelectService: (serviceName: string) => void;
 }
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectService }) => {
+  const { language, t } = useLanguage();
+  const packages = SERVICE_PACKAGES_BY_LANG[language];
+
   return (
     <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
       <div className="text-center max-w-3xl mx-auto mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#daa520]/10 border border-[#daa520]/30 font-mono text-[11px] font-bold text-[#daa520] tracking-wider uppercase mb-3">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>ПРОЗРАЧНЫЕ УСЛОВИЯ & СТОИМОСТЬ</span>
+          <span>{t.servicesSection.badge}</span>
         </div>
         <h2 className="font-unbounded font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-          ТАРИФЫ И ФОРМАТЫ{' '}
-          <span className="text-[#daa520]">СОТРУДНИЧЕСТВА</span>
+          {t.servicesSection.titlePrefix}
+          <span className="text-[#daa520]">{t.servicesSection.titleHighlight}</span>
         </h2>
         <p className="font-mono text-xs sm:text-sm text-[#8a8aa0] mt-3">
-          Никаких скрытых доплат. Фиксируем техническое задание, смету и точные сроки в договоре с финансовой ответственностью.
+          {t.servicesSection.subtitle}
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {SERVICE_PACKAGES.map((pkg) => (
+        {packages.map((pkg) => (
           <div
             key={pkg.id}
             id={`package-card-${pkg.id}`}
@@ -36,8 +40,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
           >
             {/* Popular Badge */}
             {pkg.isPopular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#daa520] text-[#050507] font-mono text-[10px] font-black uppercase tracking-widest shadow-[0_0_15px_rgba(218,165,32,0.5)]">
-                ХИТ ВЫБОРА
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#daa520] text-[#050507] font-mono text-[10px] font-black uppercase tracking-widest shadow-[0_0_15px_rgba(218,165,32,0.5)] whitespace-nowrap">
+                {t.servicesSection.popularBadge}
               </div>
             )}
 
@@ -84,11 +88,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
             {/* Bottom Target & CTA */}
             <div className="pt-4 border-t border-white/5">
               <span className="font-mono text-[10px] text-[#555570] block mb-3 uppercase tracking-wider">
-                Для кого: {pkg.recommendedFor}
+                {t.servicesSection.forWhomLabel} {pkg.recommendedFor}
               </span>
 
               <button
-                onClick={() => onSelectService(`Выбран тариф: ${pkg.title} (${pkg.priceFrom})`)}
+                onClick={() =>
+                  onSelectService(
+                    `${t.servicesSection.selectedPresetPrefix}${pkg.title} (${pkg.priceFrom})`
+                  )
+                }
                 className={`w-full py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer ${
                   pkg.isPopular
                     ? 'bg-[#daa520] hover:bg-[#ffce33] text-[#050507] shadow-[0_0_20px_rgba(218,165,32,0.3)]'
@@ -96,7 +104,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                 }`}
                 id={`select-service-${pkg.id}`}
               >
-                <span>Заказать расчет</span>
+                <span>{t.servicesSection.orderEstimateBtn}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -109,14 +117,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
         <div className="flex items-center gap-3">
           <Shield className="w-6 h-6 text-[#daa520] shrink-0" />
           <p className="font-mono text-xs text-[#8a8aa0]">
-            <strong className="text-white">Юридическая гарантия:</strong> Фиксируем стоимость в договоре. Оплата разбивается на этапы 50% / 50% с актом выполненных работ.
+            <strong className="text-white">{t.servicesSection.legalGuaranteeTitle}</strong>{' '}
+            {t.servicesSection.legalGuaranteeText}
           </p>
         </div>
         <a
           href="#calculator"
           className="shrink-0 text-xs font-mono font-bold text-[#daa520] hover:underline"
         >
-          Рассчитать индивидуальный проект →
+          {t.servicesSection.customProjectLink}
         </a>
       </div>
     </section>

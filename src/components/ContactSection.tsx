@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Sparkles, CheckCircle2, MessageSquare, Phone, Mail, Clock, ShieldCheck } from 'lucide-react';
+import { Send, Sparkles, CheckCircle2, Mail, Clock, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ContactSectionProps {
   presetMessage?: string;
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage }) => {
+  const { t } = useLanguage();
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [email, setEmail] = useState('');
-  const [budget, setBudget] = useState('150 000 – 300 000 ₽');
+  const [budgetId, setBudgetId] = useState('b2');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,12 +22,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
     }
   }, [presetMessage]);
 
-  const budgetOptions = [
-    'до 150 000 ₽',
-    '150 000 – 300 000 ₽',
-    '300 000 – 600 000 ₽',
-    'от 600 000 ₽',
-  ];
+  const budgetOptions = t.contactSection.budgetOptions;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,38 +46,38 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
           <div className="lg:col-span-5 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#daa520]/10 border border-[#daa520]/30 font-mono text-[11px] font-bold text-[#daa520] tracking-wider uppercase">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>СТАРТ ПРОЕКТА</span>
+              <span>{t.contactSection.badge}</span>
             </div>
 
             <h2 className="font-unbounded font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tight leading-tight">
-              ОБСУДИМ ВАШУ ИДЕЮ?{' '}
-              <span className="text-[#daa520]">ОТВЕТИМ ЗА 15 МИНУТ</span>
+              {t.contactSection.titlePrefix}
+              <span className="text-[#daa520]">{t.contactSection.titleHighlight}</span>
             </h2>
 
             <p className="font-inter text-xs sm:text-sm text-[#8a8aa0] leading-relaxed">
-              Оставьте заявку на бесплатную консультацию. Мы изучим задачу, покажем релевантные кейсы и составим детальную смету с календарным планом.
+              {t.contactSection.subtitle}
             </p>
 
             <div className="space-y-3 pt-2">
               <div className="flex items-center gap-3 font-mono text-xs text-[#e8e8ed]">
-                <div className="w-8 h-8 rounded-lg bg-[#050507] border border-white/10 flex items-center justify-center text-[#daa520]">
+                <div className="w-8 h-8 rounded-lg bg-[#050507] border border-white/10 flex items-center justify-center text-[#daa520] shrink-0">
                   <Clock className="w-4 h-4" />
                 </div>
-                <span>Скорость первого ответа: до 15 минут</span>
+                <span>{t.contactSection.responseSpeed}</span>
               </div>
 
               <div className="flex items-center gap-3 font-mono text-xs text-[#e8e8ed]">
-                <div className="w-8 h-8 rounded-lg bg-[#050507] border border-white/10 flex items-center justify-center text-[#daa520]">
+                <div className="w-8 h-8 rounded-lg bg-[#050507] border border-white/10 flex items-center justify-center text-[#daa520] shrink-0">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
-                <span>Подписываем NDA до первого звонка</span>
+                <span>{t.contactSection.ndaNote}</span>
               </div>
             </div>
 
             {/* Direct Instant Channels */}
             <div className="pt-6 border-t border-white/10">
               <span className="font-mono text-[10px] text-[#8a8aa0] uppercase tracking-wider block mb-3">
-                Или напишите нам напрямую:
+                {t.contactSection.directLabel}
               </span>
               <div className="flex flex-wrap gap-2.5">
                 <a
@@ -116,33 +113,35 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <h3 className="font-unbounded font-black text-2xl text-white mb-2">
-                  ЗАЯВКА УСПЕШНО ПРИНЯТА!
+                  {t.contactSection.successTitle}
                 </h3>
                 <p className="font-mono text-xs sm:text-sm text-[#8a8aa0] max-w-md leading-relaxed mb-6">
-                  Спасибо, {name}! Мы уже изучаем детали вашего запроса. Наш ведущий разработчик свяжется с вами по указанным контактам в течение 15 минут.
+                  {t.contactSection.successGreeting}
+                  {name}
+                  {t.contactSection.successBody}
                 </p>
                 <button
                   onClick={() => {
                     setSubmitted(false);
                     setMessage('');
                   }}
-                  className="px-5 py-2.5 rounded-lg border border-white/15 hover:border-[#daa520] font-mono text-xs text-white uppercase tracking-wider transition-all"
+                  className="px-5 py-2.5 rounded-lg border border-white/15 hover:border-[#daa520] font-mono text-xs text-white uppercase tracking-wider transition-all cursor-pointer"
                 >
-                  Отправить еще одно сообщение
+                  {t.contactSection.sendAnotherBtn}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4" id="project-inquiry-form">
                 <div>
                   <label className="font-mono text-[11px] font-bold text-[#8a8aa0] uppercase tracking-wider block mb-1.5">
-                    Ваше имя *
+                    {t.contactSection.nameLabel}
                   </label>
                   <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Александр"
+                    placeholder={t.contactSection.namePlaceholder}
                     className="w-full px-4 py-3 rounded-xl bg-[#0c0c10] border border-white/10 focus:border-[#daa520] text-sm font-mono text-white placeholder-[#555570] focus:outline-none transition-all"
                     id="input-name"
                   />
@@ -151,14 +150,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="font-mono text-[11px] font-bold text-[#8a8aa0] uppercase tracking-wider block mb-1.5">
-                      Telegram / WhatsApp / Телефон *
+                      {t.contactSection.contactLabel}
                     </label>
                     <input
                       type="text"
                       required
                       value={contact}
                       onChange={(e) => setContact(e.target.value)}
-                      placeholder="@username или +7..."
+                      placeholder={t.contactSection.contactPlaceholder}
                       className="w-full px-4 py-3 rounded-xl bg-[#0c0c10] border border-white/10 focus:border-[#daa520] text-sm font-mono text-white placeholder-[#555570] focus:outline-none transition-all"
                       id="input-contact"
                     />
@@ -166,13 +165,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
 
                   <div>
                     <label className="font-mono text-[11px] font-bold text-[#8a8aa0] uppercase tracking-wider block mb-1.5">
-                      Email (для отправки КП)
+                      {t.contactSection.emailLabel}
                     </label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="alex@company.com"
+                      placeholder={t.contactSection.emailPlaceholder}
                       className="w-full px-4 py-3 rounded-xl bg-[#0c0c10] border border-white/10 focus:border-[#daa520] text-sm font-mono text-white placeholder-[#555570] focus:outline-none transition-all"
                       id="input-email"
                     />
@@ -182,21 +181,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
                 {/* Budget selector */}
                 <div>
                   <label className="font-mono text-[11px] font-bold text-[#8a8aa0] uppercase tracking-wider block mb-2">
-                    Ориентировочный бюджет
+                    {t.contactSection.budgetLabel}
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     {budgetOptions.map((opt) => (
                       <button
                         type="button"
-                        key={opt}
-                        onClick={() => setBudget(opt)}
+                        key={opt.id}
+                        onClick={() => setBudgetId(opt.id)}
                         className={`py-2 px-3 rounded-lg border text-left font-mono text-xs transition-all cursor-pointer ${
-                          budget === opt
+                          budgetId === opt.id
                             ? 'border-[#daa520] bg-[#daa520]/15 text-white font-bold'
                             : 'border-white/10 bg-[#0c0c10] text-[#8a8aa0] hover:border-white/20'
                         }`}
                       >
-                        {opt}
+                        {opt.label}
                       </button>
                     ))}
                   </div>
@@ -204,13 +203,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
 
                 <div>
                   <label className="font-mono text-[11px] font-bold text-[#8a8aa0] uppercase tracking-wider block mb-1.5">
-                    Опишите задачу или прикрепите ссылку
+                    {t.contactSection.taskLabel}
                   </label>
                   <textarea
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Например: Нужен продающий лендинг с AI-ботом и оплатой криптой/картами..."
+                    placeholder={t.contactSection.taskPlaceholder}
                     className="w-full px-4 py-3 rounded-xl bg-[#0c0c10] border border-white/10 focus:border-[#daa520] text-sm font-mono text-white placeholder-[#555570] focus:outline-none transition-all resize-none"
                     id="input-message"
                   />
@@ -223,17 +222,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
                   id="submit-inquiry-btn"
                 >
                   {isSubmitting ? (
-                    <span>Отправка данных...</span>
+                    <span>{t.contactSection.submittingBtn}</span>
                   ) : (
                     <>
                       <Sparkles className="w-4 h-4" />
-                      <span>Получить смету и расчет за 15 минут</span>
+                      <span>{t.contactSection.submitBtn}</span>
                     </>
                   )}
                 </button>
 
                 <p className="font-mono text-[10px] text-[#555570] text-center">
-                  Нажимая кнопку, вы соглашаетесь на обработку персональных данных и сохранение конфиденциальности.
+                  {t.contactSection.privacyNote}
                 </p>
               </form>
             )}

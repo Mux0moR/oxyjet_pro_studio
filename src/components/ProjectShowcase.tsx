@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { PROJECTS } from '../data/projects';
-import { Project, ProjectCategory } from '../types';
+import { PROJECTS_BY_LANG } from '../data/projects';
+import { ProjectCategory } from '../types';
 import { ProjectModal } from './ProjectModal';
 import { ArrowUpRight, Sparkles, TrendingUp, Filter, Search } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ProjectShowcaseProps {
   onRequestProject: (presetMessage?: string) => void;
@@ -10,18 +11,24 @@ interface ProjectShowcaseProps {
 
 export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ onRequestProject }) => {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>('all');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const { language, t } = useLanguage();
+
+  const projects = PROJECTS_BY_LANG[language];
+  const selectedProject = selectedProjectId
+    ? projects.find((p) => p.id === selectedProjectId) ?? null
+    : null;
 
   const categories: { id: ProjectCategory; label: string }[] = [
-    { id: 'all', label: 'Все проекты (6)' },
-    { id: 'ai', label: 'AI & Нейросети' },
-    { id: 'ecommerce', label: 'Финтех & E-Commerce' },
-    { id: 'saas', label: 'SaaS & Аналитика' },
-    { id: 'web', label: 'Веб-сервисы' },
+    { id: 'all', label: t.projectsSection.categories.all },
+    { id: 'ai', label: t.projectsSection.categories.ai },
+    { id: 'ecommerce', label: t.projectsSection.categories.ecommerce },
+    { id: 'saas', label: t.projectsSection.categories.saas },
+    { id: 'web', label: t.projectsSection.categories.web },
   ];
 
-  const filteredProjects = PROJECTS.filter((proj) => {
+  const filteredProjects = projects.filter((proj) => {
     const matchesCategory = activeCategory === 'all' || proj.category === activeCategory;
     const matchesSearch =
       proj.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,14 +44,14 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ onRequestProje
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#daa520]/10 border border-[#daa520]/30 font-mono text-[11px] font-bold text-[#daa520] tracking-wider uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>ПОРТФОЛИО & РЕАЛИЗОВАННЫЕ КЕЙСЫ</span>
+            <span>{t.projectsSection.badge}</span>
           </div>
           <h2 className="font-unbounded font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-            ПРОЕКТЫ, КОТОРЫЕ{' '}
-            <span className="text-[#daa520]">ПРИНОСЯТ ПРИБЫЛЬ</span>
+            {t.projectsSection.titlePrefix}
+            <span className="text-[#daa520]">{t.projectsSection.titleHighlight}</span>
           </h2>
           <p className="font-mono text-xs sm:text-sm text-[#8a8aa0] mt-3 max-w-xl">
-            Каждый кейс спроектирован с упором на конверсию, отказоустойчивость и окупаемость инвестиций клиента.
+            {t.projectsSection.subtitle}
           </p>
         </div>
 
@@ -55,7 +62,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ onRequestProje
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Поиск по стеку или названию..."
+            placeholder={t.projectsSection.searchPlaceholder}
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#0c0c10] border border-white/10 focus:border-[#daa520] text-xs font-mono text-white placeholder-[#555570] focus:outline-none transition-all"
             id="projects-search-input"
           />
@@ -66,7 +73,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ onRequestProje
       <div className="flex flex-wrap items-center gap-2 mb-10 pb-4 border-b border-white/5">
         <div className="flex items-center gap-1.5 text-xs font-mono text-[#555570] mr-2">
           <Filter className="w-3.5 h-3.5" />
-          <span>Фильтр:</span>
+          <span>{t.projectsSection.filterLabel}</span>
         </div>
         {categories.map((cat) => (
           <button
@@ -149,18 +156,20 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ onRequestProje
 
               <div className="flex items-center gap-2 pt-4 border-t border-white/5">
                 <button
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => setSelectedProjectId(project.id)}
                   className="flex-1 py-2.5 px-3 rounded-lg bg-white/5 hover:bg-[#daa520]/15 border border-white/10 hover:border-[#daa520]/50 font-mono text-xs font-bold text-white hover:text-[#daa520] flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                   id={`view-case-${project.id}`}
                 >
-                  <span>Кейс детально</span>
+                  <span>{t.projectsSection.caseDetailsBtn}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
 
                 <button
-                  onClick={() => onRequestProject(`Интересует проект наподобие: ${project.title}`)}
+                  onClick={() =>
+                    onRequestProject(`${t.projectsSection.orderSimilarPresetPrefix}${project.title}`)
+                  }
                   className="p-2.5 rounded-lg border border-white/10 hover:border-[#daa520] bg-white/[0.02] text-[#8a8aa0] hover:text-[#daa520] transition-all cursor-pointer"
-                  title="Заказать аналогичный"
+                  title={t.projectsSection.orderSimilarTitle}
                   id={`order-similar-${project.id}`}
                 >
                   <Sparkles className="w-4 h-4" />
@@ -174,16 +183,18 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ onRequestProje
       {filteredProjects.length === 0 && (
         <div className="text-center py-16 p-8 rounded-2xl bg-[#0c0c10] border border-white/5">
           <p className="font-mono text-sm text-[#8a8aa0] mb-4">
-            Проектов по запросу «{searchQuery}» не найдено.
+            {t.projectsSection.emptyStatePrefix}
+            {searchQuery}
+            {t.projectsSection.emptyStateSuffix}
           </p>
           <button
             onClick={() => {
               setSearchQuery('');
               setActiveCategory('all');
             }}
-            className="px-4 py-2 rounded-lg bg-[#daa520] text-[#050507] font-mono text-xs font-bold uppercase"
+            className="px-4 py-2 rounded-lg bg-[#daa520] text-[#050507] font-mono text-xs font-bold uppercase cursor-pointer"
           >
-            Сбросить фильтры
+            {t.projectsSection.resetFilters}
           </button>
         </div>
       )}
@@ -191,7 +202,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ onRequestProje
       {/* Case study modal */}
       <ProjectModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={() => setSelectedProjectId(null)}
         onRequestSimilar={(preset) => onRequestProject(preset)}
       />
     </section>

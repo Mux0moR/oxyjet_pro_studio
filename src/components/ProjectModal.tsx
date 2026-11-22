@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { X, ExternalLink, Sparkles, CheckCircle2, TrendingUp, Clock, Building, Layers } from 'lucide-react';
 import { Project } from '../types';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -13,6 +14,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
   onClose,
   onRequestSimilar,
 }) => {
+  const { language, t } = useLanguage();
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -47,7 +50,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-lg bg-white/5 border border-white/10 hover:border-[#daa520] text-[#8a8aa0] hover:text-white transition-all cursor-pointer z-10"
           id="modal-close-btn"
-          aria-label="Закрыть модальное окно"
+          aria-label={t.projectModal.closeAria}
         >
           <X className="w-5 h-5" />
         </button>
@@ -62,7 +65,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           </span>
           <div className="flex items-center gap-1.5 ml-auto text-xs font-mono text-[#8a8aa0] mr-8">
             <Clock className="w-3.5 h-3.5 text-[#daa520]" />
-            <span>Срок разработки: {project.duration}</span>
+            <span>
+              {t.projectModal.devDuration} {project.duration}
+            </span>
           </div>
         </div>
 
@@ -75,11 +80,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="flex flex-wrap items-center gap-4 pb-6 mb-6 border-b border-white/10 font-mono text-xs text-[#8a8aa0]">
           <div className="flex items-center gap-1.5">
             <Building className="w-3.5 h-3.5 text-[#daa520]" />
-            <span>Клиент: <strong className="text-white">{project.client}</strong></span>
+            <span>
+              {t.projectModal.clientLabel} <strong className="text-white">{project.client}</strong>
+            </span>
           </div>
           <div className="flex items-center gap-1.5">
             <Layers className="w-3.5 h-3.5 text-[#daa520]" />
-            <span>Категория: <strong className="text-white">{project.categoryLabel}</strong></span>
+            <span>
+              {t.projectModal.categoryLabel}{' '}
+              <strong className="text-white">{project.categoryLabel}</strong>
+            </span>
           </div>
         </div>
 
@@ -94,7 +104,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 <span className="font-mono text-[10px] text-[#8a8aa0] uppercase tracking-wider">
                   {metric.label}
                 </span>
-                <TrendingUp className="w-3.5 h-3.5 text-[#daa520]" />
+                <TrendingUp className="w-3.5 h-3.5 text-[#daa520] shrink-0" />
               </div>
               <span className="font-unbounded font-black text-xl text-[#daa520]">
                 {metric.value}
@@ -107,7 +117,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="p-5 rounded-xl bg-white/[0.02] border border-red-500/20">
             <span className="font-mono text-xs font-bold text-red-400 uppercase tracking-wider block mb-2">
-              Исходная проблема & Вызов
+              {t.projectModal.challengeTitle}
             </span>
             <p className="font-inter text-sm text-[#8a8aa0] leading-relaxed">
               {project.challenge}
@@ -116,7 +126,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 
           <div className="p-5 rounded-xl bg-white/[0.02] border border-[#daa520]/30">
             <span className="font-mono text-xs font-bold text-[#daa520] uppercase tracking-wider block mb-2">
-              Реализованное решение
+              {t.projectModal.solutionTitle}
             </span>
             <p className="font-inter text-sm text-[#8a8aa0] leading-relaxed">
               {project.solution}
@@ -127,7 +137,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         {/* Architecture Highlights */}
         <div className="mb-8">
           <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider mb-3">
-            Ключевые инженерные внедрения:
+            {t.projectModal.architectureTitle}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {project.architectureHighlights.map((point) => (
@@ -145,7 +155,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         {/* Tech Stack */}
         <div className="mb-8">
           <span className="font-mono text-xs font-bold text-[#8a8aa0] uppercase tracking-wider block mb-2.5">
-            Технологический стек:
+            {t.projectModal.techStackTitle}
           </span>
           <div className="flex flex-wrap gap-2">
             {project.techStack.map((tech) => (
@@ -163,7 +173,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         {project.quote && (
           <div className="p-5 rounded-xl bg-[#050507] border-l-2 border-[#daa520] border-y border-r border-white/5 mb-8">
             <p className="font-inter italic text-sm text-white/90 mb-3">
-              «{project.quote.text}»
+              {language === 'ru' ? `«${project.quote.text}»` : `“${project.quote.text}”`}
             </p>
             <div className="flex items-center gap-2 font-mono text-xs">
               <span className="text-[#daa520] font-bold">{project.quote.author}</span>
@@ -183,7 +193,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-white/20 hover:border-[#daa520] text-xs font-mono text-white hover:text-[#daa520] transition-all"
               >
-                <span>Превью демо</span>
+                <span>{t.projectModal.previewDemo}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
@@ -191,14 +201,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 
           <button
             onClick={() => {
-              onRequestSimilar(`Интересует разработка по примеру кейса: ${project.title}`);
+              onRequestSimilar(`${t.projectModal.wantSimilarPresetPrefix}${project.title}`);
               onClose();
             }}
             className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#daa520] hover:bg-[#ffce33] text-[#050507] font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(218,165,32,0.3)] transition-all cursor-pointer"
             id="modal-request-similar-btn"
           >
             <Sparkles className="w-4 h-4" />
-            <span>Хочу похожий проект</span>
+            <span>{t.projectModal.wantSimilarBtn}</span>
           </button>
         </div>
       </div>

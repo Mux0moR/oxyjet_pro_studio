@@ -1,46 +1,18 @@
 import React, { useState } from 'react';
-import { Calculator, Check, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Calculator, Check, Sparkles, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ProjectCalculatorProps {
   onApplyCalculation: (summary: string, totalCost: number) => void;
 }
 
-interface ProjectTypeOption {
-  id: string;
-  name: string;
-  basePrice: number;
-  baseDays: number;
-}
-
-interface FeatureOption {
-  id: string;
-  name: string;
-  price: number;
-  days: number;
-}
-
 export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCalculation }) => {
-  const projectTypes: ProjectTypeOption[] = [
-    { id: 'landing', name: 'Продающий Landing Page', basePrice: 120000, baseDays: 7 },
-    { id: 'ecommerce', name: 'Интернет-магазин / Дроп', basePrice: 220000, baseDays: 16 },
-    { id: 'saas', name: 'Web-сервис / SaaS Платформа', basePrice: 280000, baseDays: 20 },
-    { id: 'ai', name: 'AI-Ассистенты & Автоматизация', basePrice: 190000, baseDays: 12 },
-    { id: 'enterprise', name: 'Enterprise Экосистема', basePrice: 550000, baseDays: 32 },
-  ];
+  const { language, t } = useLanguage();
+  const locale = language === 'en' ? 'en-US' : 'ru-RU';
 
-  const designTiers = [
-    { id: 'standard', name: 'Фирменный High-End дизайн', price: 0, days: 0 },
-    { id: 'interactive3d', name: 'WebGL 3D & Микроанимации', price: 60000, days: 4 },
-    { id: 'branding', name: 'Полная Дизайн-система & Брендбук', price: 45000, days: 3 },
-  ];
-
-  const featuresList: FeatureOption[] = [
-    { id: 'ai-bot', name: 'Интеллектуальный AI-бот / Чат 24/7', price: 45000, days: 3 },
-    { id: 'paygate', name: 'Платежный шлюз (МИР / СБП / Crypto)', price: 35000, days: 2 },
-    { id: 'crm', name: 'Синхронизация с CRM (amoCRM / 1С)', price: 30000, days: 2 },
-    { id: 'i18n', name: 'Мультиязычность (RU / EN / CN)', price: 25000, days: 2 },
-    { id: 'rbac', name: 'Личные кабинеты с разделением ролей', price: 55000, days: 4 },
-  ];
+  const projectTypes = t.calculator.projectTypes;
+  const designTiers = t.calculator.designTiers;
+  const featuresList = t.calculator.featuresList;
 
   const [selectedType, setSelectedType] = useState<string>('landing');
   const [selectedDesign, setSelectedDesign] = useState<string>('standard');
@@ -48,7 +20,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
   const [isUrgent, setIsUrgent] = useState<boolean>(false);
 
   // Calculations
-  const currentType = projectTypes.find((t) => t.id === selectedType) || projectTypes[0];
+  const currentType = projectTypes.find((item) => item.id === selectedType) || projectTypes[0];
   const currentDesign = designTiers.find((d) => d.id === selectedDesign) || designTiers[0];
 
   const featuresPrice = selectedFeatures.reduce((acc, featId) => {
@@ -79,9 +51,9 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
       .filter(Boolean)
       .join(', ');
 
-    const summary = `Калькулятор: ${currentType.name}, Дизайн: ${currentDesign.name}, Функции: [${featureNames}], Срочность: ${
-      isUrgent ? 'Срочный' : 'Обычный'
-    }. Оценка: ${finalPrice.toLocaleString('ru-RU')} ₽ (~${finalDays} дн.)`;
+    const summary = `${t.calculator.summaryTitle}: ${currentType.name}, ${t.calculator.summaryDesign}: ${currentDesign.name}, ${t.calculator.summaryFeatures}: [${featureNames}], ${t.calculator.summaryUrgency}: ${
+      isUrgent ? t.calculator.urgentModeText : t.calculator.normalModeText
+    }. ${t.calculator.summaryEstimate}: ${finalPrice.toLocaleString(locale)} ₽ (~${finalDays} ${t.calculator.daysUnit})`;
 
     onApplyCalculation(summary, finalPrice);
   };
@@ -91,14 +63,14 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
       <div className="text-center max-w-3xl mx-auto mb-14">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#daa520]/10 border border-[#daa520]/30 font-mono text-[11px] font-bold text-[#daa520] tracking-wider uppercase mb-3">
           <Calculator className="w-3.5 h-3.5" />
-          <span>ОНЛАЙН СМЕТА ЗА 1 МИНУТУ</span>
+          <span>{t.calculator.badge}</span>
         </div>
         <h2 className="font-unbounded font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-          КАЛЬКУЛЯТОР СТОИМОСТИ{' '}
-          <span className="text-[#daa520]">& СРОКОВ</span>
+          {t.calculator.titlePrefix}
+          <span className="text-[#daa520]">{t.calculator.titleHighlight}</span>
         </h2>
         <p className="font-mono text-xs sm:text-sm text-[#8a8aa0] mt-3">
-          Сконфигурируйте состав проекта и получите предварительную смету. Мы гарантируем точность расчета до 95%.
+          {t.calculator.subtitle}
         </p>
       </div>
 
@@ -108,7 +80,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
           {/* Step 1: Project Type */}
           <div>
             <label className="font-mono text-xs font-bold text-[#daa520] uppercase tracking-wider block mb-3">
-              1. Выберите тип вашего продукта:
+              {t.calculator.step1Label}
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {projectTypes.map((type) => (
@@ -126,7 +98,8 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                     {type.name}
                   </span>
                   <span className="text-[11px] text-[#daa520]">
-                    от {type.basePrice.toLocaleString('ru-RU')} ₽
+                    {t.calculator.fromPrefix}
+                    {type.basePrice.toLocaleString(locale)} ₽
                   </span>
                 </button>
               ))}
@@ -136,7 +109,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
           {/* Step 2: Design tier */}
           <div>
             <label className="font-mono text-xs font-bold text-[#daa520] uppercase tracking-wider block mb-3">
-              2. Уровень проработки дизайна & визуала:
+              {t.calculator.step2Label}
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {designTiers.map((tier) => (
@@ -154,7 +127,9 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                     {tier.name}
                   </span>
                   <span className="text-[11px] text-[#8a8aa0]">
-                    {tier.price === 0 ? 'Включено в базу' : `+${tier.price.toLocaleString('ru-RU')} ₽`}
+                    {tier.price === 0
+                      ? t.calculator.includedInBase
+                      : `+${tier.price.toLocaleString(locale)} ₽`}
                   </span>
                 </button>
               ))}
@@ -164,7 +139,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
           {/* Step 3: Extra Features */}
           <div>
             <label className="font-mono text-xs font-bold text-[#daa520] uppercase tracking-wider block mb-3">
-              3. Дополнительные модули и интеграции:
+              {t.calculator.step3Label}
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {featuresList.map((feature) => {
@@ -182,7 +157,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                   >
                     <div className="flex items-center gap-2.5">
                       <div
-                        className={`w-4 h-4 rounded flex items-center justify-center border ${
+                        className={`w-4 h-4 rounded shrink-0 flex items-center justify-center border ${
                           isChecked
                             ? 'bg-[#daa520] border-[#daa520] text-[#050507]'
                             : 'border-white/20 bg-black/40'
@@ -193,7 +168,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                       <span className="text-xs">{feature.name}</span>
                     </div>
                     <span className="text-[11px] text-[#daa520] shrink-0 font-bold">
-                      +{feature.price.toLocaleString('ru-RU')} ₽
+                      +{feature.price.toLocaleString(locale)} ₽
                     </span>
                   </div>
                 );
@@ -213,10 +188,10 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                 onChange={() => {}}
                 className="w-4 h-4 accent-[#daa520] cursor-pointer"
               />
-              <span className="flex-1">
-                Срочный запуск (+25% к стоимости, ускорение разработки на 35%)
+              <span className="flex-1">{t.calculator.urgentLabel}</span>
+              <span className="text-[#daa520] font-bold shrink-0">
+                {t.calculator.fastTrackBadge}
               </span>
-              <span className="text-[#daa520] font-bold">Fast-Track</span>
             </label>
           </div>
         </div>
@@ -226,37 +201,41 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
           <div className="p-6 sm:p-7 rounded-2xl bg-[#0c0c10] border-2 border-[#daa520]/40 shadow-[0_0_30px_rgba(218,165,32,0.15)] relative overflow-hidden">
             <div className="flex items-center justify-between gap-2 mb-4">
               <span className="font-mono text-xs uppercase tracking-widest text-[#8a8aa0]">
-                Оценка сметы
+                {t.calculator.estimateTitle}
               </span>
-              <span className="px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-[10px] font-bold">
-                СКИДКА 10% АКТИВНА
+              <span className="px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-[10px] font-bold whitespace-nowrap">
+                {t.calculator.discountBadge}
               </span>
             </div>
 
             {/* Total price display */}
             <div className="mb-6">
               <div className="font-unbounded font-black text-3xl sm:text-4xl text-[#daa520] mb-1">
-                {finalPrice.toLocaleString('ru-RU')} ₽
+                {finalPrice.toLocaleString(locale)} ₽
               </div>
               <div className="font-mono text-xs text-[#8a8aa0] flex items-center gap-2">
-                <span>Срок:</span>
-                <strong className="text-white">~{finalDays} рабочих дней</strong>
+                <span>{t.calculator.timelineLabel}</span>
+                <strong className="text-white">
+                  ~{finalDays} {t.calculator.workingDaysUnit}
+                </strong>
               </div>
             </div>
 
             {/* Included highlights */}
             <div className="space-y-2 border-t border-b border-white/10 py-4 mb-6 font-mono text-xs text-[#8a8aa0]">
-              <div className="flex items-center justify-between">
-                <span>Продукт:</span>
-                <span className="text-white font-bold">{currentType.name}</span>
+              <div className="flex items-center justify-between gap-2">
+                <span className="shrink-0">{t.calculator.productLabel}</span>
+                <span className="text-white font-bold text-right">{currentType.name}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span>Доп. модулей:</span>
-                <span className="text-[#daa520] font-bold">{selectedFeatures.length} шт</span>
+              <div className="flex items-center justify-between gap-2">
+                <span>{t.calculator.extraModulesLabel}</span>
+                <span className="text-[#daa520] font-bold">
+                  {selectedFeatures.length} {t.calculator.pcsUnit}
+                </span>
               </div>
-              <div className="flex items-center justify-between">
-                <span>Гарантия:</span>
-                <span className="text-white">60 дней SLA</span>
+              <div className="flex items-center justify-between gap-2">
+                <span>{t.calculator.warrantyLabel}</span>
+                <span className="text-white">{t.calculator.warrantyValue}</span>
               </div>
             </div>
 
@@ -267,17 +246,17 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
               id="calc-save-btn"
             >
               <Sparkles className="w-4 h-4" />
-              <span>Зафиксировать расчет</span>
+              <span>{t.calculator.lockEstimateBtn}</span>
             </button>
 
             <p className="font-inter text-[11px] text-[#555570] text-center">
-              *Точная смета фиксируется в официальном договоре после короткого звонка.
+              {t.calculator.disclaimer}
             </p>
           </div>
 
           <div className="p-4 rounded-xl bg-[#0c0c10] border border-white/5 flex items-center gap-3 text-xs font-mono text-[#8a8aa0]">
             <ShieldCheck className="w-5 h-5 text-[#daa520] shrink-0" />
-            <span>Предоплата разбивается на этапы 50% / 50%</span>
+            <span>{t.calculator.splitPaymentNote}</span>
           </div>
         </div>
       </div>

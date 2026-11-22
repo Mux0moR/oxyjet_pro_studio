@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { LanguageProvider } from './i18n/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProjectShowcase } from './components/ProjectShowcase';
@@ -38,42 +39,43 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050507] text-[#e8e8ed] selection:bg-[#daa520] selection:text-[#050507]">
-      {/* Top Navbar */}
-      <Navbar onOpenContact={handleOpenContactWithPreset} />
+    <LanguageProvider>
+      <div className="min-h-screen bg-[#050507] text-[#e8e8ed] selection:bg-[#daa520] selection:text-[#050507]">
+        {/* Top Navbar */}
+        <Navbar onOpenContact={handleOpenContactWithPreset} />
 
-      {/* Hero Header */}
-      <main>
-        <Hero onOpenContact={handleOpenContactWithPreset} />
+        {/* Hero Header */}
+        <main>
+          <Hero onOpenContact={handleOpenContactWithPreset} />
 
-        {/* Project Showcase Section */}
-        <ProjectShowcase onRequestProject={handleOpenContactWithPreset} />
+          {/* Project Showcase Section */}
+          <ProjectShowcase onRequestProject={handleOpenContactWithPreset} />
 
-        {/* Services & Packages */}
-        <ServicesSection onSelectService={handleOpenContactWithPreset} />
+          {/* Services & Packages */}
+          <ServicesSection onSelectService={handleOpenContactWithPreset} />
 
-        {/* Interactive Cost & Timeline Calculator */}
-        <ProjectCalculator onApplyCalculation={handleCalculatorPreset} />
+          {/* Interactive Cost & Timeline Calculator */}
+          <ProjectCalculator onApplyCalculation={handleCalculatorPreset} />
 
-        {/* 5-Step Process */}
-        <ProcessSection />
+          {/* 5-Step Process */}
+          <ProcessSection />
 
-        {/* Technology Stack & Benchmark */}
-        <TechStackSection />
+          {/* Technology Stack & Benchmark */}
+          <TechStackSection />
 
-        {/* Client Reviews */}
-        <TestimonialsSection />
+          {/* Client Reviews */}
+          <TestimonialsSection />
 
-        {/* FAQ */}
-        <FAQSection />
+          {/* FAQ */}
+          <FAQSection />
 
-        {/* Contact & Lead Capture Form */}
-        <ContactSection presetMessage={contactPreset} />
-      </main>
+          {/* Contact & Lead Capture Form */}
+          <ContactSection presetMessage={contactPreset} />
+        </main>
 
-      {/* Footer */}
-      <Footer />
-    </div>
+        {/* Footer */}
+        <Footer />
+      </div>
+    </LanguageProvider>
   );
 }
-

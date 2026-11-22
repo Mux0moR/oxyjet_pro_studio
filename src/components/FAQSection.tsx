@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { FAQS } from '../data/projects';
-import { ChevronDown, HelpCircle, Sparkles } from 'lucide-react';
+import { FAQS_BY_LANG } from '../data/projects';
+import { ChevronDown, HelpCircle } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const { language, t } = useLanguage();
+  const faqs = FAQS_BY_LANG[language];
 
   const toggle = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -14,19 +17,20 @@ export const FAQSection: React.FC = () => {
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#daa520]/10 border border-[#daa520]/30 font-mono text-[11px] font-bold text-[#daa520] tracking-wider uppercase mb-3">
           <HelpCircle className="w-3.5 h-3.5" />
-          <span>ОТВЕТЫ НА ВОПРОСЫ</span>
+          <span>{t.faqSection.badge}</span>
         </div>
         <h2 className="font-unbounded font-black text-3xl sm:text-4xl text-white tracking-tight">
-          ЧАСТО ЗАДАВАЕМЫЕ <span className="text-[#daa520]">ВОПРОСЫ</span>
+          {t.faqSection.titlePrefix}
+          <span className="text-[#daa520]">{t.faqSection.titleHighlight}</span>
         </h2>
       </div>
 
       <div className="space-y-3">
-        {FAQS.map((faq, idx) => {
+        {faqs.map((faq, idx) => {
           const isOpen = openIndex === idx;
           return (
             <div
-              key={faq.question}
+              key={idx}
               id={`faq-item-${idx}`}
               className="rounded-xl bg-[#0c0c10] border border-white/8 hover:border-white/20 transition-all overflow-hidden"
             >

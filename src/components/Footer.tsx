@@ -1,7 +1,10 @@
 import React from 'react';
 import { Terminal, ArrowUp, Send, Mail } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -20,29 +23,29 @@ export const Footer: React.FC = () => {
             </span>
           </div>
           <p className="font-mono text-xs text-[#555570] max-w-sm">
-            Продающая веб-разработка, AI-агенты и масштабируемые цифровые решения с упором на конверсию и ROI.
+            {t.footer.tagline}
           </p>
         </div>
 
         {/* Links */}
         <div className="flex flex-wrap justify-center gap-6 font-mono text-xs uppercase tracking-wider">
           <a href="#projects" className="hover:text-[#daa520] transition-colors">
-            Кейсы
+            {t.footer.links.cases}
           </a>
           <a href="#services" className="hover:text-[#daa520] transition-colors">
-            Тарифы
+            {t.footer.links.services}
           </a>
           <a href="#calculator" className="hover:text-[#daa520] transition-colors">
-            Калькулятор
+            {t.footer.links.calculator}
           </a>
           <a href="#process" className="hover:text-[#daa520] transition-colors">
-            Процесс
+            {t.footer.links.process}
           </a>
           <a href="#testimonials" className="hover:text-[#daa520] transition-colors">
-            Отзывы
+            {t.footer.links.testimonials}
           </a>
           <a href="#faq" className="hover:text-[#daa520] transition-colors">
-            FAQ
+            {t.footer.links.faq}
           </a>
         </div>
 
@@ -69,7 +72,8 @@ export const Footer: React.FC = () => {
           <button
             onClick={scrollToTop}
             className="p-2.5 rounded-lg border border-white/10 hover:border-[#daa520] text-white hover:text-[#daa520] transition-all cursor-pointer"
-            title="Наверх"
+            title={t.footer.scrollToTopTitle}
+            aria-label={t.footer.scrollToTopTitle}
           >
             <ArrowUp className="w-4 h-4" />
           </button>
@@ -77,10 +81,8 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[#555570]">
-        <p>© 2025–2026 OxyJet Studio. Все права защищены.</p>
-        <p className="flex items-center gap-1">
-          Designed with high precision & speed
-        </p>
+        <p>{t.footer.copyright}</p>
+        <p className="flex items-center gap-1">{t.footer.designedBy}</p>
       </div>
     </footer>
   );
