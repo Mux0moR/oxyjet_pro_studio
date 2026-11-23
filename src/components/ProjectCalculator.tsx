@@ -7,8 +7,8 @@ interface ProjectCalculatorProps {
 }
 
 export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCalculation }) => {
-  const { language, t } = useLanguage();
-  const locale = language === 'ru' ? 'ru-RU' : 'en-US';
+  const { t } = useLanguage();
+  const formatUsd = (amount: number) => `$${amount.toLocaleString('en-US')}`;
 
   const projectTypes = t.calculator.projectTypes;
   const designTiers = t.calculator.designTiers;
@@ -53,7 +53,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
 
     const summary = `${t.calculator.summaryTitle}: ${currentType.name}, ${t.calculator.summaryDesign}: ${currentDesign.name}, ${t.calculator.summaryFeatures}: [${featureNames}], ${t.calculator.summaryUrgency}: ${
       isUrgent ? t.calculator.urgentModeText : t.calculator.normalModeText
-    }. ${t.calculator.summaryEstimate}: ${finalPrice.toLocaleString(locale)} ₽ (~${finalDays} ${t.calculator.daysUnit})`;
+    }. ${t.calculator.summaryEstimate}: ${formatUsd(finalPrice)} (~${finalDays} ${t.calculator.daysUnit})`;
 
     onApplyCalculation(summary, finalPrice);
   };
@@ -99,7 +99,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                   </span>
                   <span className="text-[11px] text-[#daa520]">
                     {t.calculator.fromPrefix}
-                    {type.basePrice.toLocaleString(locale)} ₽
+                    {formatUsd(type.basePrice)}
                   </span>
                 </button>
               ))}
@@ -129,7 +129,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                   <span className="text-[11px] text-[#8a8aa0]">
                     {tier.price === 0
                       ? t.calculator.includedInBase
-                      : `+${tier.price.toLocaleString(locale)} ₽`}
+                      : `+${formatUsd(tier.price)}`}
                   </span>
                 </button>
               ))}
@@ -168,7 +168,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
                       <span className="text-xs">{feature.name}</span>
                     </div>
                     <span className="text-[11px] text-[#daa520] shrink-0 font-bold">
-                      +{feature.price.toLocaleString(locale)} ₽
+                      +{formatUsd(feature.price)}
                     </span>
                   </div>
                 );
@@ -211,7 +211,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({ onApplyCal
             {/* Total price display */}
             <div className="mb-6">
               <div className="font-unbounded font-black text-3xl sm:text-4xl text-[#daa520] mb-1">
-                {finalPrice.toLocaleString(locale)} ₽
+                {formatUsd(finalPrice)}
               </div>
               <div className="font-mono text-xs text-[#8a8aa0] flex items-center gap-2">
                 <span>{t.calculator.timelineLabel}</span>
