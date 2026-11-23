@@ -1,6 +1,7 @@
 import React from 'react';
 import { Terminal, ArrowUp, Send, Mail } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const Footer: React.FC = () => {
   const { t } = useLanguage();
@@ -50,12 +51,24 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Action / Back to top */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 shrink-0">
+          <a
+            href="https://wa.me/995555411240"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-2 rounded-lg bg-[#0c0c10] border border-white/[0.06] hover:border-[#daa520] text-white hover:text-[#daa520] font-mono text-xs font-semibold tracking-wide flex items-center gap-2 transition-all whitespace-nowrap"
+            title="WhatsApp: +995 555 411240"
+            aria-label="WhatsApp: +995 555 411240"
+            id="footer-whatsapp-link"
+          >
+            <WhatsAppIcon className="w-3.5 h-3.5 text-[#daa520] shrink-0" />
+            <span>WhatsApp: +995 555 411240</span>
+          </a>
           <a
             href="https://t.me/oxyjetprostudio_bot"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2.5 rounded-lg border border-white/10 hover:border-[#daa520] text-white hover:text-[#daa520] transition-all"
+            className="p-2.5 rounded-lg bg-[#0c0c10] border border-white/[0.06] hover:border-[#daa520] text-white hover:text-[#daa520] transition-all"
             title="Telegram: @oxyjetprostudio_bot"
             aria-label="Telegram bot @oxyjetprostudio_bot"
           >
@@ -63,7 +76,7 @@ export const Footer: React.FC = () => {
           </a>
           <a
             href="mailto:hello@oxyjet.win"
-            className="p-2.5 rounded-lg border border-white/10 hover:border-[#daa520] text-white hover:text-[#daa520] transition-all"
+            className="p-2.5 rounded-lg bg-[#0c0c10] border border-white/[0.06] hover:border-[#daa520] text-white hover:text-[#daa520] transition-all"
             title="Email: hello@oxyjet.win"
             aria-label="Email hello@oxyjet.win"
           >
@@ -71,7 +84,7 @@ export const Footer: React.FC = () => {
           </a>
           <button
             onClick={scrollToTop}
-            className="p-2.5 rounded-lg border border-white/10 hover:border-[#daa520] text-white hover:text-[#daa520] transition-all cursor-pointer"
+            className="p-2.5 rounded-lg bg-[#0c0c10] border border-white/[0.06] hover:border-[#daa520] text-white hover:text-[#daa520] transition-all cursor-pointer"
             title={t.footer.scrollToTopTitle}
             aria-label={t.footer.scrollToTopTitle}
           >

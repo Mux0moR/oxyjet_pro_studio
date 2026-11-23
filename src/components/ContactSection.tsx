@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Sparkles, CheckCircle2, Mail, Clock, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 interface ContactSectionProps {
   presetMessage?: string;
@@ -79,23 +80,33 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
               <span className="font-mono text-[10px] text-[#8a8aa0] uppercase tracking-wider block mb-3">
                 {t.contactSection.directLabel}
               </span>
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-col gap-2.5">
                 <a
                   href="https://t.me/oxyjetprostudio_bot"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-lg bg-white/5 hover:bg-[#daa520] border border-white/10 hover:border-[#daa520] text-white hover:text-[#050507] font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all"
+                  className="w-full h-11 px-4 rounded-lg bg-[#050507] hover:bg-[#daa520] border border-white/10 hover:border-[#daa520] text-white hover:text-[#050507] font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2.5 transition-all group"
                   id="direct-telegram"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-4 h-4 text-[#daa520] group-hover:text-[#050507] transition-colors shrink-0" />
                   <span>@oxyjetprostudio_bot</span>
                 </a>
                 <a
+                  href="https://wa.me/995555411240"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-11 px-4 rounded-lg bg-[#050507] hover:bg-[#daa520] border border-white/10 hover:border-[#daa520] text-white hover:text-[#050507] font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2.5 transition-all group"
+                  id="direct-whatsapp"
+                >
+                  <WhatsAppIcon className="w-4 h-4 text-[#daa520] group-hover:text-[#050507] transition-colors shrink-0" />
+                  <span>WhatsApp: +995 555 411240</span>
+                </a>
+                <a
                   href="mailto:hello@oxyjet.win"
-                  className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-white font-mono text-xs font-bold tracking-wider flex items-center gap-2 transition-all"
+                  className="w-full h-11 px-4 rounded-lg bg-[#050507] hover:bg-[#daa520] border border-white/10 hover:border-[#daa520] text-white hover:text-[#050507] font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2.5 transition-all group"
                   id="direct-email"
                 >
-                  <Mail className="w-3.5 h-3.5 text-[#daa520]" />
+                  <Mail className="w-4 h-4 text-[#daa520] group-hover:text-[#050507] transition-colors shrink-0" />
                   <span>hello@oxyjet.win</span>
                 </a>
               </div>

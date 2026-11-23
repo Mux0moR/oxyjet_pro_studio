@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { X, ExternalLink, Sparkles, CheckCircle2, TrendingUp, Clock, Building, Layers } from 'lucide-react';
 import { Project } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -185,7 +186,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 
         {/* Footer Actions */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10">
-          <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
@@ -197,6 +198,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
+            <a
+              href="https://wa.me/995555411240"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#050507] border border-white/[0.08] hover:border-[#daa520] text-xs font-mono text-white hover:text-[#daa520] transition-all"
+              id="modal-whatsapp-btn"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 text-[#daa520]" />
+              <span>WhatsApp: +995 555 411240</span>
+            </a>
           </div>
 
           <button

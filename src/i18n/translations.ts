@@ -19,9 +19,11 @@ export interface TranslationDictionary {
     slotsBadge: string;
     slotsMobileBanner: string;
     telegram: string;
+    whatsapp: string;
     discussProject: string;
     quickOrderTitle: string;
     telegramDrawer: string;
+    whatsappDrawer: string;
     toggleMenuAria: string;
     langSwitchAria: string;
     presets: {
@@ -251,9 +253,11 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       slotsBadge: '2 Q3 slots left',
       slotsMobileBanner: 'Accepting Projects // 2 Slots Open',
       telegram: 'Telegram',
+      whatsapp: 'WhatsApp',
       discussProject: 'Discuss Project',
       quickOrderTitle: 'Request Quote',
       telegramDrawer: 'Message on Telegram',
+      whatsappDrawer: 'WhatsApp: +995 555 411240',
       toggleMenuAria: 'Toggle menu',
       langSwitchAria: 'Switch language',
       presets: {
@@ -484,9 +488,11 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       slotsBadge: '2 слота на Q3',
       slotsMobileBanner: 'Принимаем проекты // Свободно 2 слота',
       telegram: 'Telegram',
+      whatsapp: 'WhatsApp',
       discussProject: 'Обсудить проект',
       quickOrderTitle: 'Заказать',
       telegramDrawer: 'Написать в Telegram',
+      whatsappDrawer: 'WhatsApp: +995 555 411240',
       toggleMenuAria: 'Открыть меню',
       langSwitchAria: 'Переключить язык',
       presets: {
@@ -717,9 +723,11 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       slotsBadge: 'Q3-ის 2 სლოტი',
       slotsMobileBanner: 'ვიღებთ პროექტებს // 2 თავისუფალი სლოტი',
       telegram: 'Telegram',
+      whatsapp: 'WhatsApp',
       discussProject: 'პროექტის განხილვა',
       quickOrderTitle: 'შეკვეთა',
       telegramDrawer: 'მოგვწერეთ Telegram-ზე',
+      whatsappDrawer: 'WhatsApp: +995 555 411240',
       toggleMenuAria: 'მენიუს გახსნა',
       langSwitchAria: 'ენის შეცვლა',
       presets: {
