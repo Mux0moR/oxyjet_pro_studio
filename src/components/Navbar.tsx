@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, Send, Terminal, Sparkles } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { trackEvent } from '../utils/analytics';
 
 interface NavbarProps {
   onOpenContact: (presetMessage?: string) => void;
@@ -153,6 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             href="https://wa.me/995555411240"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent('contact_whatsapp', { source: 'navbar' })}
             className="flex items-center justify-center p-2 2xl:px-3 2xl:py-2 rounded-lg border border-white/15 hover:border-[#daa520] text-xs font-mono font-bold tracking-wider text-white hover:text-[#daa520] bg-[#0c0c10] transition-all whitespace-nowrap shrink-0"
             id="nav-whatsapp-btn"
             title="WhatsApp: +995 555 411240"
@@ -246,6 +248,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               href="https://wa.me/995555411240"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('contact_whatsapp', { source: 'mobile_drawer' })}
               className="w-full py-2.5 rounded-lg border border-white/15 bg-[#0c0c10] text-white hover:text-[#daa520] font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2 hover:border-[#daa520] transition-all"
               id="mobile-drawer-whatsapp"
             >

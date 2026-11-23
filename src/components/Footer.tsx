@@ -2,8 +2,13 @@ import React from 'react';
 import { Terminal, ArrowUp, Send, Mail } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { trackEvent } from '../utils/analytics';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenPrivacy: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
   const { t } = useLanguage();
 
   const scrollToTop = () => {
@@ -56,6 +61,7 @@ export const Footer: React.FC = () => {
             href="https://wa.me/995555411240"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent('contact_whatsapp', { source: 'footer' })}
             className="px-3 py-2 rounded-lg bg-[#0c0c10] border border-white/[0.06] hover:border-[#daa520] text-white hover:text-[#daa520] font-mono text-xs font-semibold tracking-wide flex items-center gap-2 transition-all whitespace-nowrap"
             title="WhatsApp: +995 555 411240"
             aria-label="WhatsApp: +995 555 411240"
@@ -95,7 +101,17 @@ export const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[#555570]">
         <p>{t.footer.copyright}</p>
-        <p className="flex items-center gap-1">{t.footer.designedBy}</p>
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+          <button
+            type="button"
+            onClick={onOpenPrivacy}
+            id="footer-privacy-link"
+            className="text-[#8a8aa0] hover:text-[#daa520] transition-colors cursor-pointer underline underline-offset-4 decoration-white/15 hover:decoration-[#daa520]"
+          >
+            {t.footer.privacyPolicy}
+          </button>
+          <p className="flex items-center gap-1">{t.footer.designedBy}</p>
+        </div>
       </div>
     </footer>
   );

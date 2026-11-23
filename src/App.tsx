@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LanguageProvider } from './i18n/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -16,9 +16,35 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { CookieBanner } from './components/CookieBanner';
+import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
+import {
+  CookieConsentStatus,
+  getSavedCookieConsent,
+  saveCookieConsent,
+  updateGtagConsent,
+} from './utils/analytics';
 
 export default function App() {
   const [contactPreset, setContactPreset] = useState<string>('');
+  const [cookieConsent, setCookieConsent] = useState<CookieConsentStatus>(getSavedCookieConsent);
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
+
+  useEffect(() => {
+    updateGtagConsent(cookieConsent);
+  }, [cookieConsent]);
+
+  const handleAcceptCookies = () => {
+    saveCookieConsent('accepted');
+    setCookieConsent('accepted');
+    updateGtagConsent('accepted');
+  };
+
+  const handleDeclineCookies = () => {
+    saveCookieConsent('declined');
+    setCookieConsent('declined');
+    updateGtagConsent('declined');
+  };
 
   const handleOpenContactWithPreset = (presetMessage?: string) => {
     if (presetMessage) {
@@ -74,7 +100,24 @@ export default function App() {
         </main>
 
         {/* Footer */}
-        <Footer />
+        <Footer onOpenPrivacy={() => setPrivacyModalOpen(true)} />
+
+        {/* GDPR Cookie Consent Banner */}
+        <CookieBanner
+          consentStatus={cookieConsent}
+          onAccept={handleAcceptCookies}
+          onDecline={handleDeclineCookies}
+          onOpenPrivacy={() => setPrivacyModalOpen(true)}
+        />
+
+        {/* Localized Privacy Policy Modal */}
+        <PrivacyPolicyModal
+          isOpen={privacyModalOpen}
+          onClose={() => setPrivacyModalOpen(false)}
+          consentStatus={cookieConsent}
+          onAcceptCookies={handleAcceptCookies}
+          onDeclineCookies={handleDeclineCookies}
+        />
       </div>
     </LanguageProvider>
   );

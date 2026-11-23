@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Language, TRANSLATIONS, TranslationDictionary } from './translations';
+import { trackEvent } from '../utils/analytics';
 
 const STORAGE_KEY = 'oxyjet_lang';
 
@@ -34,6 +35,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } catch {
       // Ignore storage write errors
     }
+    trackEvent('language_switch', { language: lang });
   };
 
   const toggleLanguage = () => {

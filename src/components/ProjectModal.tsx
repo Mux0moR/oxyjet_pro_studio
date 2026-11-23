@@ -3,6 +3,7 @@ import { X, ExternalLink, Sparkles, CheckCircle2, TrendingUp, Clock, Building, L
 import { Project } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { trackEvent } from '../utils/analytics';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -202,6 +203,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               href="https://wa.me/995555411240"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('contact_whatsapp', { source: 'project_modal' })}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#050507] border border-white/[0.08] hover:border-[#daa520] text-xs font-mono text-white hover:text-[#daa520] transition-all"
               id="modal-whatsapp-btn"
             >

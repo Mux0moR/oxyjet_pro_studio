@@ -228,8 +228,34 @@ export interface TranslationDictionary {
       faq: string;
     };
     scrollToTopTitle: string;
+    privacyPolicy: string;
     copyright: string;
     designedBy: string;
+  };
+  cookieConsent: {
+    badge: string;
+    title: string;
+    description: string;
+    privacyLink: string;
+    acceptBtn: string;
+    declineBtn: string;
+  };
+  privacyModal: {
+    badge: string;
+    title: string;
+    updatedAt: string;
+    closeAria: string;
+    intro: string;
+    sections: {
+      title: string;
+      body: string;
+      items?: string[];
+    }[];
+    contactPrompt: string;
+    statusLabel: string;
+    statusAccepted: string;
+    statusDeclined: string;
+    statusPending: string;
   };
 }
 
@@ -465,8 +491,62 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         faq: 'FAQ',
       },
       scrollToTopTitle: 'Back to top',
+      privacyPolicy: 'Privacy Policy',
       copyright: '© 2025–2026 OxyJet Studio. All rights reserved.',
       designedBy: 'Designed with high precision & speed',
+    },
+    cookieConsent: {
+      badge: 'COOKIES & PRIVACY',
+      title: 'We respect your privacy',
+      description:
+        'We use essential browser storage for language settings and optional Google Analytics cookies to improve site experience. Read our',
+      privacyLink: 'Privacy Policy',
+      acceptBtn: 'Accept',
+      declineBtn: 'Decline',
+    },
+    privacyModal: {
+      badge: 'GDPR & DATA PROTECTION',
+      title: 'Privacy Policy',
+      updatedAt: 'Effective: 2025–2026 • OxyJet Studio',
+      closeAria: 'Close privacy policy',
+      intro:
+        'OxyJet Studio is committed to transparent data handling. Below is a clear summary of what information we collect, why we use it, and how you control your privacy preferences.',
+      sections: [
+        {
+          title: '1. Contact Form & Project Estimation Data',
+          body: 'When you submit an inquiry via the "Get Estimate & Roadmap in 15 Min" form, we collect only the details you provide in order to evaluate your scope and reply promptly.',
+          items: [
+            'Name and preferred contact handle (Telegram, WhatsApp, or phone number)',
+            'Optional email address for sending commercial proposals and estimates',
+            'Estimated budget range, project description, and active interface language',
+          ],
+        },
+        {
+          title: '2. Anonymous Google Analytics (GA4: G-RRGV46J3BG)',
+          body: 'Analytics cookies remain disabled by default until you explicitly click "Accept". When enabled, GA4 helps us measure aggregate traffic and key interactions without selling personal data.',
+          items: [
+            'Aggregated page performance and session metrics',
+            'Conversion and UX events: lead submissions (generate_lead), WhatsApp clicks (contact_whatsapp), and language switches (language_switch)',
+          ],
+        },
+        {
+          title: '3. Essential Storage & Cookies',
+          body: 'We store lightweight local preferences strictly in your browser so the interface behaves consistently across visits:',
+          items: [
+            'oxyjet_lang — remembers your chosen interface language (EN / RU / KA)',
+            'cookie_consent — remembers whether you accepted or declined analytics cookies',
+          ],
+        },
+        {
+          title: '4. Your Rights & Data Deletion',
+          body: 'We never sell or rent client contact details to third parties. You may request access, correction, or complete deletion of your inquiry data at any time via email or WhatsApp.',
+        },
+      ],
+      contactPrompt: 'Privacy questions or data requests:',
+      statusLabel: 'Analytics Cookies:',
+      statusAccepted: 'Accepted',
+      statusDeclined: 'Declined',
+      statusPending: 'Not set',
     },
   },
   ru: {
@@ -700,8 +780,62 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         faq: 'FAQ',
       },
       scrollToTopTitle: 'Наверх',
+      privacyPolicy: 'Политика конфиденциальности',
       copyright: '© 2025–2026 OxyJet Studio. Все права защищены.',
       designedBy: 'Designed with high precision & speed',
+    },
+    cookieConsent: {
+      badge: 'COOKIES & ПРИВАТНОСТЬ',
+      title: 'Мы уважаем вашу приватность',
+      description:
+        'Мы используем локальное хранилище для сохранения выбранного языка и анонимную статистику Google Analytics (с вашего согласия) для улучшения сервиса. Подробнее — в',
+      privacyLink: 'Политике конфиденциальности',
+      acceptBtn: 'Принять',
+      declineBtn: 'Отклонить',
+    },
+    privacyModal: {
+      badge: 'GDPR & ЗАЩИТА ДАННЫХ',
+      title: 'Политика конфиденциальности',
+      updatedAt: 'Актуально на 2025–2026 • OxyJet Studio',
+      closeAria: 'Закрыть политику конфиденциальности',
+      intro:
+        'OxyJet Studio бережно относится к вашим персональным данным. Ниже подробно описано, какие сведения собираются на сайте, для каких целей они используются и как вы управляете согласием.',
+      sections: [
+        {
+          title: '1. Данные из формы оценки проекта',
+          body: 'При отправке заявки через форму «Получить смету и расчет за 15 минут» мы обрабатываем только указанные вами данные для подготовки оценки и связи с вами.',
+          items: [
+            'Ваше имя и контакт для связи (Telegram, WhatsApp или номер телефона)',
+            'Email (если указан) для отправки коммерческого предложения и сметы',
+            'Ориентировочный бюджет, описание задачи и выбранный язык интерфейса',
+          ],
+        },
+        {
+          title: '2. Анонимная аналитика Google Analytics (G-RRGV46J3BG)',
+          body: 'Сбор аналитических cookies по умолчанию отключен (denied) и активируется только после нажатия кнопки «Принять».',
+          items: [
+            'Обезличенная статистика посещаемости и скорости работы страниц',
+            'События взаимодействия: отправка заявки (generate_lead), переходы в WhatsApp (contact_whatsapp) и переключение языка (language_switch)',
+          ],
+        },
+        {
+          title: '3. Файлы Cookie и локальное хранилище',
+          body: 'Мы используем минимальный набор технических ключей в вашем браузере для корректной работы настроек:',
+          items: [
+            'oxyjet_lang — сохраняет выбранный вами язык (EN / RU / KA)',
+            'cookie_consent — сохраняет ваш выбор согласия на использование аналитических cookies',
+          ],
+        },
+        {
+          title: '4. Хранение и удаление данных',
+          body: 'Мы не передаем и не продаем контакты клиентов третьим лицам. Вы можете в любой момент запросить изменение или полное удаление ваших данных по почте или в WhatsApp.',
+        },
+      ],
+      contactPrompt: 'Вопросы по данным и приватности:',
+      statusLabel: 'Cookies аналитики:',
+      statusAccepted: 'Приняты',
+      statusDeclined: 'Отклонены',
+      statusPending: 'Не выбрано',
     },
   },
   ka: {
@@ -935,8 +1069,62 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         faq: 'FAQ',
       },
       scrollToTopTitle: 'ზემოთ ასვლა',
+      privacyPolicy: 'კონფიდენციალურობის პოლიტიკა',
       copyright: '© 2025–2026 OxyJet Studio. ყველა უფლება დაცულია.',
       designedBy: 'Designed with high precision & speed',
+    },
+    cookieConsent: {
+      badge: 'COOKIES და კონფიდენციალურობა',
+      title: 'ჩვენ ვიცავთ თქვენს კონფიდენციალურობას',
+      description:
+        'ვიყენებთ ბრაუზერის ლოკალურ მეხსიერებას ენის შესანახად და ანონიმურ Google Analytics ქუქი-ფაილებს (თქვენი თანხმობით) საიტის გასაუმჯობესებლად. იხილეთ',
+      privacyLink: 'კონფიდენციალურობის პოლიტიკა',
+      acceptBtn: 'მიღება',
+      declineBtn: 'უარყოფა',
+    },
+    privacyModal: {
+      badge: 'GDPR და მონაცემთა დაცვა',
+      title: 'კონფიდენციალურობის პოლიტიკა',
+      updatedAt: 'ძალაშია: 2025–2026 • OxyJet Studio',
+      closeAria: 'კონფიდენციალურობის პოლიტიკის დახურვა',
+      intro:
+        'OxyJet Studio პატივს სცემს თქვენს კონფიდენციალურობას. ქვემოთ მოცემულია გამჭვირვალე ინფორმაცია იმის შესახებ, თუ რა მონაცემები გროვდება და როგორ შეგიძლიათ მართოთ თქვენი არჩევანი.',
+      sections: [
+        {
+          title: '1. საკონტაქტო ფორმით მიღებული მონაცემები',
+          body: 'პროექტის შეფასების ფორმის შევსებისას ვამუშავებთ მხოლოდ თქვენ მიერ მითითებულ ინფორმაციას ბიუჯეტის დასათვლელად და 15 წუთში პასუხის გასაცემად.',
+          items: [
+            'სახელი და სასურველი საკონტაქტო არხი (Telegram, WhatsApp ან ტელეფონის ნომერი)',
+            'ელფოსტა (სურვილისამებრ) კომერციული შეთავაზების გასაგზავნად',
+            'სავარაუდო ბიუჯეტი, პროექტის აღწერა და ინტერფეისის არჩეული ენა',
+          ],
+        },
+        {
+          title: '2. ანონიმური სტატისტიკა Google Analytics (G-RRGV46J3BG)',
+          body: 'ანალიტიკური ქუქი-ფაილები ნაგულისხმევად გამორთულია (denied) და აქტიურდება მხოლოდ ღილაკზე «მიღება» დაჭერის შემდეგ.',
+          items: [
+            'გვერდების ჩატვირთვისა და ტრაფიკის აგრეგირებული ანონიმური სტატისტიკა',
+            'მომხმარებლის ქმედებები: განაცხადის გაგზავნა (generate_lead), WhatsApp-ზე გადასვლა (contact_whatsapp) და ენის შეცვლა (language_switch)',
+          ],
+        },
+        {
+          title: '3. Cookies და ლოკალური მეხსიერება',
+          body: 'საიტის სტაბილური მუშაობისთვის ბრაუზერში ინახება მხოლოდ აუცილებელი ტექნიკური პარამეტრები:',
+          items: [
+            'oxyjet_lang — იმახსოვრებს თქვენ მიერ არჩეულ ენას (EN / RU / KA)',
+            'cookie_consent — იმახსოვრებს ქუქი-ფაილებზე თქვენს გადაწყვეტილებას',
+          ],
+        },
+        {
+          title: '4. თქვენი უფლებები და მონაცემთა წაშლა',
+          body: 'ჩვენ არასდროს გადავცემთ ან ვყიდით კლიენტთა კონტაქტებს მესამე პირებზე. შეგიძლიათ ნებისმიერ დროს მოითხოვოთ თქვენი მონაცემების წაშლა ელფოსტით ან WhatsApp-ით.',
+        },
+      ],
+      contactPrompt: 'კითხვები მონაცემთა დაცვაზე:',
+      statusLabel: 'ანალიტიკის Cookies:',
+      statusAccepted: 'მიღებულია',
+      statusDeclined: 'უარყოფილია',
+      statusPending: 'არჩეული არ არის',
     },
   },
 };
