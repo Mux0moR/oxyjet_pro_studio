@@ -8,7 +8,7 @@ interface ContactSectionProps {
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage }) => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [email, setEmail] = useState('');
@@ -16,24 +16,62 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (presetMessage) {
       setMessage((prev) => (prev ? `${prev}\n\n${presetMessage}` : presetMessage));
+      setSubmitted(false);
+      setSubmitError(null);
     }
   }, [presetMessage]);
 
   const budgetOptions = t.contactSection.budgetOptions;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !contact.trim()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setSubmitError(null);
+
+    const SCRIPT_URL =
+      'https://script.google.com/macros/s/AKfycbw2jQR9bNUAKIPYMqbN6lk6mFjrc5AtIpUegQ452-IWztIr7VehKCMQRwNsyA0FNkoHvQ/exec';
+
+    const selectedBudget =
+      budgetOptions.find((opt) => opt.id === budgetId)?.label || budgetId;
+
+    const payload = new URLSearchParams({
+      name: name.trim(),
+      contact: contact.trim(),
+      email: email.trim(),
+      budget: selectedBudget,
+      projectDetails: message.trim(),
+      language,
+    });
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
+        body: payload,
+      });
       setSubmitted(true);
-    }, 600);
+    } catch (err) {
+      console.error('Lead submission error:', err);
+      const errorText =
+        language === 'ru'
+          ? 'Не удалось отправить заявку. Пожалуйста, напишите нам в Telegram или WhatsApp.'
+          : language === 'ka'
+            ? 'განაცხადის გაგზავნა ვერ მოხერხდა. გთხოვთ მოგვწეროთ Telegram-ზე ან WhatsApp-ზე.'
+            : 'Failed to submit inquiry. Please message us directly on Telegram or WhatsApp.';
+      setSubmitError(errorText);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -241,6 +279,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
                     </>
                   )}
                 </button>
+
+                {submitError && (
+                  <p
+                    role="alert"
+                    id="submit-error-message"
+                    className="px-3.5 py-2.5 rounded-lg bg-red-500/10 border border-red-500/30 font-mono text-xs text-red-400 text-center"
+                  >
+                    {submitError}
+                  </p>
+                )}
 
                 <p className="font-mono text-[10px] text-[#555570] text-center">
                   {t.contactSection.privacyNote}
