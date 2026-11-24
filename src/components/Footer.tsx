@@ -2,14 +2,14 @@ import React from 'react';
 import { Terminal, ArrowUp, Send, Mail } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { WhatsAppIcon } from './WhatsAppIcon';
-import { trackEvent } from '../utils/analytics';
+import { trackEvent, trackTelegramClick } from '../utils/analytics';
 
 interface FooterProps {
   onOpenPrivacy: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -74,9 +74,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
             href="https://t.me/oxyjetprostudio_bot"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackTelegramClick('footer', language)}
             className="p-2.5 rounded-lg bg-[#0c0c10] border border-white/[0.06] hover:border-[#daa520] text-white hover:text-[#daa520] transition-all"
             title="Telegram: @oxyjetprostudio_bot"
             aria-label="Telegram bot @oxyjetprostudio_bot"
+            id="footer-telegram-link"
           >
             <Send className="w-4 h-4" />
           </a>

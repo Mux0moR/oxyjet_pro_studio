@@ -31,19 +31,21 @@ export default function App() {
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   useEffect(() => {
-    updateGtagConsent(cookieConsent);
+    if (cookieConsent !== null) {
+      updateGtagConsent(cookieConsent);
+    }
   }, [cookieConsent]);
 
   const handleAcceptCookies = () => {
-    saveCookieConsent('accepted');
-    setCookieConsent('accepted');
-    updateGtagConsent('accepted');
+    saveCookieConsent('granted');
+    setCookieConsent('granted');
+    updateGtagConsent('granted');
   };
 
   const handleDeclineCookies = () => {
-    saveCookieConsent('declined');
-    setCookieConsent('declined');
-    updateGtagConsent('declined');
+    saveCookieConsent('denied');
+    setCookieConsent('denied');
+    updateGtagConsent('denied');
   };
 
   const handleOpenContactWithPreset = (presetMessage?: string) => {

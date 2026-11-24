@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, Send, Terminal, Sparkles } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { WhatsAppIcon } from './WhatsAppIcon';
-import { trackEvent } from '../utils/analytics';
+import { trackEvent, trackTelegramClick } from '../utils/analytics';
 
 interface NavbarProps {
   onOpenContact: (presetMessage?: string) => void;
@@ -142,6 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             href="https://t.me/oxyjetprostudio_bot"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackTelegramClick('header', language)}
             className="flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-lg border border-white/20 hover:border-[#daa520] text-xs font-mono font-bold uppercase tracking-wider text-white hover:text-[#daa520] bg-white/[0.03] transition-all whitespace-nowrap"
             id="nav-telegram-btn"
             title={t.nav.telegram}
@@ -239,7 +240,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               href="https://t.me/oxyjetprostudio_bot"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackTelegramClick('mobile_drawer', language)}
               className="w-full py-2.5 rounded-lg border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:border-[#daa520]"
+              id="mobile-drawer-telegram"
             >
               <Send className="w-4 h-4 text-[#daa520]" />
               <span>{t.nav.telegramDrawer}</span>

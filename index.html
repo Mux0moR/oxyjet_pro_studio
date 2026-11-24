@@ -7,33 +7,52 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
-    <meta name="description" content="Custom web development, high-load digital platforms, and conversion-focused AI solutions." />
-    <meta property="og:title" content="OxyJet Studio — High-Converting Websites & Digital Product Engineering" />
-    <meta property="og:description" content="Custom web development, high-load digital platforms, and conversion-focused AI solutions." />
+    <meta name="description" content="We craft premium websites, high-load platforms, and custom AI agents that boost lead conversion up to 4.2x. Get your project estimate & roadmap in 15 min." />
+    <link rel="canonical" href="https://oxyjetpro.ai.studio/" />
+
+    <!-- Open Graph / Telegram / WhatsApp / LinkedIn -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OxyJet Studio" />
+    <meta property="og:title" content="OxyJet Studio — We Build Digital Products That Sell" />
+    <meta property="og:description" content="We craft premium websites, high-load platforms, and custom AI agents that boost lead conversion up to 4.2x. Zero template builders. Contract-backed deadlines." />
+    <meta property="og:url" content="https://oxyjetpro.ai.studio/" />
+    <meta property="og:image" content="https://oxyjetpro.ai.studio/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="OxyJet Studio — We Build Digital Products That Sell" />
+    <meta name="twitter:description" content="Premium websites, high-load platforms, and custom AI agents that boost lead conversion up to 4.2x." />
+    <meta name="twitter:image" content="https://oxyjetpro.ai.studio/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Georgian:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-    <!-- Google tag (gtag.js) with GDPR Consent Mode -->
+    <!-- Google Consent Mode v2 (strictly before gtag.js) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      var savedCookieConsent = null;
+      var savedConsent = null;
       try {
-        savedCookieConsent = window.localStorage.getItem('cookie_consent');
+        savedConsent = localStorage.getItem('cookie_consent');
       } catch (e) {}
+      var initialConsent = savedConsent === 'granted' ? 'granted' : 'denied';
       gtag('consent', 'default', {
-        analytics_storage: savedCookieConsent === 'accepted' ? 'granted' : 'denied',
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        wait_for_update: 500
+        'ad_storage': initialConsent,
+        'ad_user_data': initialConsent,
+        'ad_personalization': initialConsent,
+        'analytics_storage': initialConsent,
+        'wait_for_update': 500
       });
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RRGV46J3BG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-RRGV46J3BG');
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RRGV46J3BG"></script>
   </head>
   <body>
     <div id="root"></div>

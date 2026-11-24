@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Send, Sparkles, CheckCircle2, Mail, Clock, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { WhatsAppIcon } from './WhatsAppIcon';
-import { trackEvent } from '../utils/analytics';
+import { trackEvent, trackTelegramClick } from '../utils/analytics';
 
 interface ContactSectionProps {
   presetMessage?: string;
@@ -128,6 +128,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ presetMessage })
                   href="https://t.me/oxyjetprostudio_bot"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackTelegramClick('contact', language)}
                   className="w-full h-11 px-4 rounded-lg bg-[#050507] hover:bg-[#daa520] border border-white/10 hover:border-[#daa520] text-white hover:text-[#050507] font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2.5 transition-all group"
                   id="direct-telegram"
                 >

@@ -38,9 +38,9 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyModalProps> = ({
   if (!isOpen) return null;
 
   const consentBadgeText =
-    consentStatus === 'accepted'
+    consentStatus === 'granted'
       ? t.privacyModal.statusAccepted
-      : consentStatus === 'declined'
+      : consentStatus === 'denied'
         ? t.privacyModal.statusDeclined
         : t.privacyModal.statusPending;
 
@@ -156,7 +156,7 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyModalProps> = ({
             <span>{t.privacyModal.statusLabel}</span>
             <span
               className={`px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider border ${
-                consentStatus === 'accepted'
+                consentStatus === 'granted'
                   ? 'bg-[#daa520]/15 border-[#daa520]/40 text-[#daa520]'
                   : 'bg-white/5 border-white/15 text-[#e8e8ed]'
               }`}
